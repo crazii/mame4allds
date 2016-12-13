@@ -1,0 +1,97 @@
+--------------------------------------------------------------------------------
+Q: Virtually none of my MAME ROMS are working. I've got the latest versions. 
+
+A: You need MAME ROMS which are compatible with MAME 0.37b5. This is a relatively older 
+version. Many of the later version MAME roms will not work. Some ROMS can be easily converted 
+(using freely available tools), others cannot. 
+
+--------------------------------------------------------------------------------
+Q: Why isn't Neo Geo game 'X' not working?
+
+A: Currently, it's not included. Will be added later when more memory becomes available.
+--------------------------------------------------------------------------------
+Q: Why port MAME 0.37b5 and not some later version?
+
+Later versions of MAME tend to concentrate on compatibility as the cost of performance. 
+Earlier versions are more in line with the hardware capabilities of our target machine - 
+in this case the Dingoo. These earlier versions have some significant programming speedups 
+which have been removed in later versions. Two examples are the use of internal 8-bit graphic 
+rendering and dirty buffer handling.
+
+Later versions of MAME with ALL the drivers included can easily reach a size of 40-60MB - 
+more than the amount of RAM available to the Dingoo (which is 32MB).
+
+So basically we're talking trade-offs here.
+
+--------------------------------------------------------------------------------
+Q: The game fails to start. 
+
+A: Large games may exceed the Dingoo's memory limitations. Even some "smaller" games 
+may fail to load. For example xmen.zip uncompresses to 9MB. MAME then needs to decode the 
+graphics - often doubling the size of the graphic ROM areas. MAME also needs to allocate 
+runtime memory to the emulated machine's hardware. This can vary enormously but sophisticated 
+hardware often needs a lot of RAM again. There is no solution to this at the moment, though 
+I have some ideas.
+
+--------------------------------------------------------------------------------
+Q: My game fails to start. I don't think size is the problem.
+
+A: Okay, it may be a bug. Let me know on the forums.
+
+--------------------------------------------------------------------------------
+Q: How do I set the volume?
+
+A: Press SELECT+B to get access to the volume/screen menu. UP and DOWN change the volume 
+component and LEFT and RIGHt set the desired level.
+
+--------------------------------------------------------------------------------
+Q: The game runs slowly. It runs fine on the GP2X or Wiz (or some other handheld).
+
+A: The GP2X/Wiz have a very nice selection of assembler-based libraries. In particular Cyclone
+ and DrZ80. This can speed up games which use the M68000 and Z80 CPUs enormously. When the game 
+ starts up, an information screen describes the hardware. If there are M68000/Z80 CPUs on this 
+ list, this may be the problem. There possibly faster cores available for the Dingoo, I will 
+ investigate for future releases.
+
+There are two ways of increasing the running speed of a game:
+
+(1). Switch off the sound from the Game Selector menu before launching the game.
+(2). Increase the Dingoo MHZ speed from the default 336Mhz.
+
+--------------------------------------------------------------------------------
+Q: Why can't I see the entire game screen?
+
+A: The hardware being emulated varies enormously. Some hardware has screen resolution which 
+exceeds the Dingoo's 320x240 screen resolution. As a result, you can't see the entire game screen 
+at once. Scaling the game screen to fit into the Dingoo's screen will solve this problem. Try using 
+one of the scalers: Scale Best, Scale Fast or Scale Half. This can be combined with 8-bit/16-bit video 
+options to increase quality at the cost of speed.
+
+--------------------------------------------------------------------------------
+Q: What's the underclock option for?
+
+A: First a bit of theory:
+
+Arcade machines have CPUs which are generally faster than they really need to be. For example, 
+CPS1 machines have M68000 CPUs clocked at 10Mhz.
+When the game is running, it may only use 7Mhz worth of instructions, the rest of the time the 
+machine is literally doing nothing - waiting for the next screen refresh.
+MAME (and other emulators) faithfully reproduce this behavior including the needless "waiting around".
+ By under clocking the emulated CPU (to say 8Mhz), MAME has (20%) less work to do emulating the CPU 
+ which can be used in other areas - generally rendering more video frames.
+Under clocking is purely experimental on the user's behalf. As a rule of thumb, underclocking to 80% 
+is pretty much okay. 
+Some games will not work as they rely on precise timing - usually based on the speed of the CPU. 
+Modifying it's speed will result in the game not running as intended or worse, not at all.
+No harm can come from under-clocking - except for the game not working.
+
+--------------------------------------------------------------------------------
+Q: What the CPU Cores option for?
+
+A: Currently this does nothing. The idea is that alternative M68K and Z80 CPU cores will be available
+ that provide a faster emulation than the current compatible (but slow) versions used by default in MAME.
+The GP2X version of MAME4ALL has options for Cyclone (M68K) and DrZ80 (Z80) however these are specific to
+ ARM CPU. The A320 Dingoo uses a MIPS based CPU.
+There are faster 'C' based M68K and Z80 CPU code out there - I just need to integrate them in. 
+
+--------------------------------------------------------------------------------
